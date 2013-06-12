@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/graph.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/legend.css">
+    <link rel="stylesheet" href="css/stylesheet.css">    
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Xively Feed Viewer</a>
+          <ul class="nav">
+            <!-- 
+            <li class="active"><a href="#">Dakar</a></li>
+            -->
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="jumbotron">
+          <h1>Beautiful graphs for your Xively feeds!</h1>
+          <p class="lead">Your data points the way they were meant to be: go back in time, zoom-in and out, save your preferences and share your graphs!</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6 offset3 pagination-centered">
+          <form action="#" class="form-inline">
+            <input id="key" type="text" placeholder="API Key">
+            <input id="feed" type="text" placeholder="Feed Id">
+            <button id="new-feed" class="btn btn-primary"><i class="icon-plus icon-white"></i></button>
+          </form>
+          <div id="new-feed-alert" class="alert hide">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Warning!</strong> Best check yo self, you're not looking too good.
+          </div>
+          <button class="btn btn-link sample-data" data-key='0Aw6UmnZFy2wRQqVCiM2BqzGUj7JpXH6Oa55Lo8xuE7TnFSV' data-feed='119921'>Dakar Weather</button>
+          <button class="btn btn-link sample-data" data-key='0Aw6UmnZFy2wRQqVCiM2BqzGUj7JpXH6Oa55Lo8xuE7TnFSV' data-feed='95558'>Paris Weather</button>
+          <button class="btn btn-link sample-data" data-key='QjgNPVyfrL8mq0ulvTk69cfkY0RPTVE8SWEA6Jr7SnjdfOBY' data-feed='106267'>Jason's Airquality</button>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span9 offset1">
+          <div id="chart"></div>
+        </div>
+        <div class="span2">
+          <div id="graph"></div>
+        </div>
+      </div>
+      
+      <div id="graph-container">
+        <div class="row graph-row hide" id="graph-sample">
+          <hr>
+          <button type="button" class="close pull-right" data-dismiss="alert">&times;</button>
+          <div class="loader"></div>
+          <div class="span9 offset1">
+            <h3 class="title"></h3>
+            <div class="chart-container"></div>
+            <p class="description"></p>
+          </div>
+          <div class="span2">
+            <div class="legend-container"></div>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+      
+      <div class="footer">
+        <small>
+          Made by <a href="http://twitter.com/sarfata">@sarfata</a> - &copy; 2013 - <a href="http://github.com/sarfata/xively-viewer/">Source code under the MIT License</a><br/>
+          Based on an original idea by <a href="http://jasonneylon.wordpress.com/2013/05/26/plotting-xively-timeseries-data-using-rickshaw/">Jason Neylon</a>. Built in a few hours thanks to <a href="http://twitter.github.io/bootstrap/">Twitter Bootstrap</a>, <a href="http://momentjs.com/">Moment.js</a> and the <a href="http://code.shutterstock.com/rickshaw/">Rickshaw</a> graph library.
+        </small>
+      </div>
+      
+    </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="js/moment.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/xivelyjs-1.0.4.min.js"></script>
+  	<script src="js/d3.v2.js"></script>
+  	<script src="js/rickshaw.min.js"></script>
+    
+    <script src="js/xively-viewer.js"></script>
+  </body>
+</html>
