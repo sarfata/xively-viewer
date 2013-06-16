@@ -131,14 +131,6 @@ function displayFeed(container, datastreams) {
       graph: graph,
       element: $( container ).find('.legend-container').get(0)
   });
-  var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-      graph: graph,
-      legend: legend
-  });
-  var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-      graph: graph,
-      legend: legend
-  });
   
   var xAxis = new Rickshaw.Graph.Axis.Time({
       graph: graph
