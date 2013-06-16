@@ -44,13 +44,13 @@ function addNewGraph(key, feed, element) {
     
     var dataStreams = {};
     _.each(feedInfo.datastreams, function(ds) {
-      console.log('Fetching datastream: %s', ds);
+      //console.log('Fetching datastream: %s', ds);
       xively.datapoint.history(feed, ds.id, history, function(dsData) {
         dataStreams[ds.id] = xivelyToRickshawPoints(dsData);
         
         // Are we done loading?
         if (_.keys(dataStreams).length == feedInfo.datastreams.length) {
-          console.log('dataStreams', dataStreams);
+          //console.log('dataStreams', dataStreams);
           displayFeed(element, dataStreams);
         }
       });
@@ -90,7 +90,7 @@ function xivelyToRickshawPoints(data) {
       y: parseFloat(point.value) 
     };
   });
-  console.log("Data has %s points from %s to %s", data.length, data[0].at, data[data.length - 1].at);
+  //console.log("Data has %s points from %s to %s", data.length, data[0].at, data[data.length - 1].at);
   return points;
 } 
 
@@ -98,18 +98,20 @@ function displayFeed(container, datastreams) {
   console.log('draw chart - container=%j data=%j', container, datastreams);
   
   var series = [];
+  var colorsFixture = new Rickshaw.Fixtures.Color();
+  var colorPalette = colorsFixture.schemes.munin;
   var scales = {};
-  _.each(_.keys(datastreams), function (dsId) {
+  _.each(_.keys(datastreams), function (dsId, idx) {
     var values = _.pluck(datastreams[dsId], 'y');
     var min = _.min(values);
     var max = _.max(values);
     
     scales[dsId] = d3.scale.linear().domain([min, max]).nice();
-    console.log('Datastream %s - Min=%s Max=%s', dsId, min, max);
+    //console.log('Datastream %s - Min=%s Max=%s', dsId, min, max);
     
     series.push({
       name: dsId,
-      color: 'steelblue',
+      color: colorPalette[idx],
       data: datastreams[dsId],
       scale: scales[dsId]
     });
@@ -143,8 +145,8 @@ function displayFeed(container, datastreams) {
   });
   xAxis.render();
 
-  _.each(datastreams, function(dsId) {
-    var yAxis = new Rickshaw.Graph.Axis.Y({
+  _.each(_.keys(datastreams), function(dsId) {
+    var yAxis = new Rickshaw.Graph.Axis.Y.Scaled({
         graph: graph,
         scale: scales[dsId]
     });
@@ -160,7 +162,6 @@ function displayFeed(container, datastreams) {
 /* Some sample data is always useful to demonstrate the product */
 $(document).ready(function() {
   $('.sample-data').click(function(event) {
-    console.log('clicked on sample data', event);
     $('#key').val(event.currentTarget.attributes['data-key'].value);
     $('#feed').val(event.currentTarget.attributes['data-feed'].value);
   });
