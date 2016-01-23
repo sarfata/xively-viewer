@@ -6,9 +6,7 @@ $( document ).ready(function() {
       $('#new-feed-alert').show();
     }
     else {
-      var newGraph = $('#graph-sample').clone().appendTo('#graph-container');
-      newGraph.show();
-      addNewGraph(key, feed, newGraph);
+      addNewFeed(key, feed);
     }
     return false;
   });
@@ -17,7 +15,10 @@ $( document ).ready(function() {
 /*
  * Coordinate getting the feed information, fetching the datastreams, displaying the graph.
  */
-function addNewGraph(key, feed, element) {
+function addNewFeed(key, feed) {
+  var element = $('#graph-sample').clone().appendTo('#graph-container');
+  element.show();
+  
   var start = moment().subtract('days', 3);
   var end = moment();
   
@@ -42,17 +43,9 @@ function addNewGraph(key, feed, element) {
       history['interval_type'] = 'discrete';
     }
     
-    var dataStreams = {};
     _.each(feedInfo.datastreams, function(ds) {
-      //console.log('Fetching datastream: %s', ds);
       xively.datapoint.history(feed, ds.id, history, function(dsData) {
-        dataStreams[ds.id] = xivelyToRickshawPoints(dsData);
-        
-        // Are we done loading?
-        if (_.keys(dataStreams).length == feedInfo.datastreams.length) {
-          //console.log('dataStreams', dataStreams);
-          displayFeed(element, dataStreams);
-        }
+        addNewGraph(feed, datastream, xivelyToRickshawPoints(dsData));
       });
     });
   });
@@ -94,7 +87,7 @@ function xivelyToRickshawPoints(data) {
   return points;
 } 
 
-function displayFeed(container, datastreams) {
+function addNewGraph(container, datastreams) {
   console.log('draw chart - container=%j data=%j', container, datastreams);
   
   var series = [];
